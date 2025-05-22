@@ -1,0 +1,27 @@
+# ✅ 核心依赖版本（强制指定兼容组合）
+transformers==4.39.3
+peft==0.9.0
+datasets>=2.17.0
+accelerate>=0.24.1
+bitsandbytes==0.43.0
+
+# ✅ tokenizer/进度条/缓存处理
+tqdm
+regex
+safetensors>=0.3.0
+packaging>=23.1
+filelock
+huggingface-hub>=0.20.3
+tokenizers>=0.14.1
+
+# ✅ 推理与训练所需
+torch==2.2.2+cu121       # 或使用 pip 下方安装链接（仅 Linux 支持 bitsandbytes CUDA）
+scipy
+numpy>=1.21.6
+pyyaml
+requests
+
+# ✅ 可选依赖（调试/可视化/兼容）
+psutil
+pandas
+matplotlib
