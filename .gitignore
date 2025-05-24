@@ -47,3 +47,6 @@ data/tokenized_wmt19_zh_en/*.arrow
 # OS files
 .DS_Store
 Thumbs.db
+
+#large file
+/deployment/
