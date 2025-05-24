@@ -1,88 +1,123 @@
-# 📘 Fine-tuning DeepSeek-LLM for Chinese-English Translation
+# 🌍 English-to-Chinese Machine Translation with DeepSeek-LLM + LoRA
 
-## 🔍 Overview
+This project fine-tunes the open-source DeepSeek-LLM on the [WMT19 Zh-En dataset](https://www.statmt.org/wmt19/translation-task.html) using parameter-efficient LoRA training. The pipeline includes data preprocessing, tokenization, training, inference, evaluation, deployment, and a web UI.
 
-This project fine-tunes the DeepSeek-LLM 7B model on the WMT19 Chinese-English dataset using Hugging Face Transformers. With PEFT (LoRA) and bitsandbytes 4-bit quantization, we enable memory-efficient fine-tuning of large language models for translation tasks.
+---
 
-## 🧠 Objectives
-
-- Load and preprocess WMT19 zh-en data
-- Use DeepSeek-LLM 7B as the base model
-- Apply LoRA for parameter-efficient tuning
-- Use 4-bit quantization for memory efficiency
-- Enable downstream inference and evaluation
-
-## 🗂️ Project Structure
+## 📌 Project Structure
 
 ```bash
 Fine-tuning/
-├── data/
-│   └── tokenized_wmt19_zh_en/
-├── preprocess/
-│   ├── load_wmt.py
-│   └── tokenize_and_prepare.py
-├── train/
-│   └── train_lora.py
-└── README.md
+├── data/                 # Raw + tokenized data
+├── preprocess/           # Scripts for data preprocessing
+├── train/                # Training with LoRA
+├── inference/            # Inference scripts + API + Web UI
+├── deployment/           # Final merged model for deployment
+├── requirements.txt
+├── README.md / README_zh.md
 ```
 
-## 📦 Tech Stack
+---
 
-| Library            | Description                           |
-|--------------------|---------------------------------------|
-| `transformers` ≥ 4.40 | HF LLM training and loading           |
-| `peft` ≥ 0.10          | Efficient fine-tuning with LoRA       |
-| `datasets`            | Dataset preprocessing and serialization |
-| `bitsandbytes`        | 4-bit quantization backend             |
-| `torch`               | Deep learning framework               |
-| `accelerate`          | Device and training accelerator       |
+## 🧪 Features
 
-## 📚 Dataset
+- ✅ Hugging Face Transformers compatible
+- ✅ Efficient fine-tuning with LoRA
+- ✅ Support for GPU/CPU inference
+- ✅ BLEU evaluation and batched result export
+- ✅ Flask API service and lightweight Web UI
 
-- Source: [WMT19 zh-en translation task](https://www.statmt.org/wmt19/translation-task.html)
-- Format: raw parallel corpus (Chinese → English)
-- Tokenization: DeepSeek tokenizer, stored as HF Dataset format
+---
 
-## 🚀 Fine-tuning Procedure
+## 🧱 Tech Stack & Dependencies
+
+| Library        | Description                      |
+|----------------|----------------------------------|
+| `transformers` | Hugging Face model framework     |
+| `peft`         | Parameter-efficient fine-tuning  |
+| `datasets`     | Data loading and formatting      |
+| `bitsandbytes` | 4-bit quantization support       |
+| `evaluate`     | BLEU scoring                     |
+| `flask`        | RESTful API + Web interface      |
+| `torch`        | Deep learning backend            |
+
+Install via:
 
 ```bash
-conda activate deepseek_lora
+pip install -r requirements.txt
+```
+
+---
+
+## 📂 Dataset Description
+
+- Source: WMT19 En-Zh Translation Task
+- Format: JSONL with `prompt` and `response`
+
+Example:
+
+```json
+{"prompt": "Translate to Chinese: How are you?", "response": "你好吗？"}
+```
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# Preprocess
+python preprocess/preprocess_wmt19.py
+python preprocess/tokenize_and_prepare.py
+
+# Train
 python train/train_lora.py
+
+# Inference (single sample)
+python inference/infer_one.py
+
+# Batch generation
+python inference/generate_predictions.py
+
+# BLEU evaluation
+python inference/evaluate_bleu.py
+
+# Launch API
+python inference/app_api.py
+
+# Launch Web UI
+python inference/app_webui.py
 ```
 
-Configuration:
+---
 
-- Epochs: 3
-- Batch Size: 2
-- LoRA: r=8, alpha=16, dropout=0.05
-- Quantization: 4bit + bf16
+## 🧊 Model Merge & Deployment
 
-## 📈 Output and Inference
-
-Model is saved to:
+Merge adapter and save model for deployment:
 
 ```bash
-./lora_output/
+python save_merged_model.py
 ```
 
-Load with:
+Saves to: `deployment/merged_model` and `.zip`
 
-```python
-from transformers import AutoModelForCausalLM
-model = AutoModelForCausalLM.from_pretrained("./lora_output")
+---
+
+## 📊 Example Output
+
+Source:
+
+```
+The challenge will be to reach an agreement that guarantees the wellbeing of future EU-UK relations.
 ```
 
-## 🔧 Environment Setup
+Translation:
 
-```bash
-conda create -n deepseek_lora python=3.10 -y
-conda activate deepseek_lora
-
-pip install torch==2.2.2+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip install transformers==4.40.1 peft==0.10.0 datasets accelerate bitsandbytes safetensors tokenizers tqdm
+```
+挑战在于达成一份保障未来欧盟-英国关系福祉的协议。
 ```
 
-## 📌 Author
+---
 
-- GitHub: [kiana0512](https://github.com/kiana0512)
-- Project Path: `F:\python_project\Fine-tuning`
+## 📬 Acknowledgments
+
+Built with ChatGPT, DeepSeek-LLM, Hugging Face Transformers, and WMT19. Thanks to the open-source community!

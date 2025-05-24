@@ -1,0 +1,49 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.env/
+.venv/
+env/
+venv/
+*.env
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# PyTorch and Hugging Face cache
+*.pt
+*.bin
+*.safetensors
+*.ckpt
+*.pth
+*.h5
+*.onnx
+.cache/
+~/.cache/
+~/.huggingface/
+~/.torch/
+
+# HuggingFace datasets cache
+~/.huggingface_hub/
+~/.hf_cache/
+*.arrow
+
+# Model training output
+train/lora_output/
+**/lora_output/
+checkpoints/
+*.log
+
+# Tokenized cache files
+data/tokenized_wmt19_zh_en/*.arrow
+
+# VSCode or IDE configs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
